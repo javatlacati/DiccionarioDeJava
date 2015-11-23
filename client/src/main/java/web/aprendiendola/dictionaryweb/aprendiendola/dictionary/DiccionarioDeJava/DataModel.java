@@ -1,6 +1,16 @@
 package web.aprendiendola.dictionaryweb.aprendiendola.dictionary.DiccionarioDeJava;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Locale;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.java.html.json.ComputedProperty;
 import net.java.html.json.Function;
 import net.java.html.json.Model;
@@ -41,8 +51,11 @@ final class DataModel {
             }
         }
         model.setDescription("");
-        model.setFoundPhrase("Word not found. Please click to search."); //java.util.ResourceBundle.getBundle("web.aprendiendola.dictionaryweb.aprendiendola.dictionary.DiccionarioDeJava.TranslateMe").getString("NOTFOUND")
         model.setCode("");
+        model.setFoundPhrase(ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe"
+        //        , Locale.getDefault()
+              //  ,new Locale("ES")
+        ).getString("NOTFOUND"));
     }
 
     @Function
