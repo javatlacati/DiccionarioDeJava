@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="DiccionarioDeJava"
         android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
-        <activity android:name="com.dukescript.presenters.Android" 
+        <activity android:name="com.dukescript.presenters.AndroidMain" 
                   android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
