@@ -13,14 +13,18 @@
         android:icon="@drawable/ic_launcher"
         android:label="DiccionarioDeJava"
         android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
-        <activity android:name="com.dukescript.presenters.AndroidMain" 
+        <activity android:name="web.aprendiendola.dictionaryweb.aprendiendola.dictionary.DiccionarioDeJava.AndroidMain" 
                   android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+       <activity android:name="com.dukescript.presenters.Android" 
+                  android:configChanges="orientation|screenSize"
+                  android:exported="false"
+                >
+        </activity>
         <!-- Configuration section. Defines: 
            - the HTML page to load on start
            - the class that contains the main initialization method
