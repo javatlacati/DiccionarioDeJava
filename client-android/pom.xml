@@ -158,6 +158,18 @@
     </build>
     <dependencies>
         <dependency>
+            <groupId>com.google.android.gms</groupId>
+            <artifactId>google-play-services</artifactId>
+            <version>28.0.0</version>
+            <type>apklib</type>
+        </dependency>
+        <dependency>
+            <groupId>com.google.android.gms</groupId>
+            <artifactId>google-play-services</artifactId>
+            <version>28.0.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>web.aprendiendola.dictionaryweb.aprendiendola.dictionary</groupId>
             <artifactId>DiccionarioDeJava</artifactId>
             <version>${project.version}</version>
