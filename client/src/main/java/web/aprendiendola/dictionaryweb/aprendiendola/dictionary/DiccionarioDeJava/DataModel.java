@@ -38,9 +38,9 @@ final class DataModel {
     }
 
     @Function
-    static void changeFP(Dictionary model) {
+    static void changeFP(final Dictionary model) {
         String searchP = model.getSearchPhrase();
-        List<String> listOfTerms = model.getTermList();
+        final List<String> listOfTerms = model.getTermList();
         for (int i = 0; i < listOfTerms.size(); i++) {
             final String term = listOfTerms.get(i);
             if (stringsAreEqual(term, searchP)) {
@@ -52,10 +52,12 @@ final class DataModel {
         }
         model.setDescription("");
         model.setCode("");
-        model.setFoundPhrase(ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe"
-        //        , Locale.getDefault()
-              //  ,new Locale("ES")
-        ).getString("NOTFOUND"));
+        model.setFoundPhrase(
+                ResourceBundle.getBundle(
+                        "web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe"
+                //        , Locale.getDefault()
+                //  ,new Locale("ES")
+                ).getString("NOTFOUND"));
     }
 
     @Function
