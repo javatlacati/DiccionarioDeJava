@@ -1,11 +1,14 @@
 package web.aprendiendola.dictionaryweb.aprendiendola.dictionary.DiccionarioDeJava;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.java.html.boot.BrowserBuilder;
+import java.util.ResourceBundle;
 import web.aprendiendola.dictionaryweb.aprendiendola.dictionary.DiccionarioDeJava.js.Dialogs;
 
 /**
@@ -14,6 +17,38 @@ import web.aprendiendola.dictionaryweb.aprendiendola.dictionary.DiccionarioDeJav
  * @author javatlacati
  */
 public final class Main {
+
+    private static final String BUNDLE_PATH
+            = "web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe";
+
+    private static void addTermsToTermList(List<String> termList, final String... terms) {
+        for (String term : terms) {
+            termList.add(ResourceBundle.getBundle(BUNDLE_PATH).getString(term));
+        }
+        //termList.addAll(Arrays.asList(terms));
+    }
+
+    private static void addTermsToDefinitionsList(List<String> definitionsList,
+            final String... terms) {
+        for (String term : terms) {
+            definitionsList.add(ResourceBundle.getBundle(BUNDLE_PATH).getString(term + "_INFO"));
+        }
+    }
+
+    private static void addTermsToExamplesList(List<String> definitionsList,
+            final String... terms) {
+        for (String term : terms) {
+            definitionsList.add(ResourceBundle.getBundle(BUNDLE_PATH).getString(term + "_CODE"));
+        }
+    }
+
+    private static void addTerms(List<String> termList,
+            List<String> definitionList,
+            List<String> examplesList, final String... terms) {
+        addTermsToTermList(termList, terms);
+        addTermsToDefinitionsList(definitionList, terms);
+        addTermsToExamplesList(examplesList, terms);
+    }
 
     /**
      * Empty constructor, since no prerequisites are needed.
@@ -47,34 +82,17 @@ public final class Main {
      * @throws java.lang.Exception
      */
     public static void onPageLoad() throws Exception {
-        Dictionary model = new Dictionary(java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").getString("HELLOWORLD"), java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").getString("CLICKTOSEARCH"), "", "");
+        Dictionary model = new Dictionary(
+                ResourceBundle.getBundle(BUNDLE_PATH)
+                .getString("HELLOWORLD"),
+                ResourceBundle.getBundle(BUNDLE_PATH)
+                .getString("CLICKTOSEARCH"),
+                "", "");
         List<String> termList = model.getTermList();
-        termList.add(java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").getString("HELLOWORLD"));
-        termList.add(java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").getString("JAVA"));
-        termList.add(java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").getString("CLASS"));
-        termList.add(java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").getString("VARIABLE"));
-        termList.add(java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").getString("PACKAGE_INFO"));
-
-        List<String> definitionList = model.getDefinitionList();
-        definitionList.addAll(Arrays.asList(
-                java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").
-                        getString("HELLOWORLD_INFO"),
-                java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").
-                        getString("JAVA_INFO"),
-                java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").
-                        getString("CLASS_INFO"),
-                java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").
-                        getString("VARIABLE_INFO"),
-                java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").
-                        getString("PACKAGE_INFO_INFO"))
-        );
-
+        List<String> definitionsList = model.getDefinitionList();
         List<String> examplesList = model.getExampleCodeList();
-        examplesList.add(java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").getString("HELLOWORLD_CODE"));
-        examplesList.add(java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").getString("JAVA_CODE"));
-        examplesList.add(java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").getString("CLASS_CODE"));
-        examplesList.add(java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").getString("VARIABLE_CODE"));
-        examplesList.add(java.util.ResourceBundle.getBundle("web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe").getString("PACKAGE_INFO_CODE"));
+        addTerms(termList, definitionsList, examplesList,
+                "HELLOWORLD", "JAVA", "CLASS", "VARIABLE", "PACKAGE_INFO");
         model.applyBindings();
         Dialogs.screenSize();
     }
