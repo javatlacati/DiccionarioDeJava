@@ -1,19 +1,11 @@
 package web.aprendiendola.dictionaryweb.aprendiendola.dictionary.DiccionarioDeJava;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Locale;
-import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.java.html.json.ComputedProperty;
 import net.java.html.json.Function;
 import net.java.html.json.Model;
+import net.java.html.json.Models;
 import net.java.html.json.Property;
 
 /**
@@ -33,7 +25,7 @@ import net.java.html.json.Property;
 final class DataModel {
 
     @ComputedProperty
-    static boolean canSearch(String searchPhrase) {
+    static boolean canSearch(final String searchPhrase) {
         return searchPhrase != null && searchPhrase.length() > 0;
     }
 
@@ -47,6 +39,11 @@ final class DataModel {
                 model.setFoundPhrase(term);
                 model.setDescription(model.getDefinitionList().get(i));
                 model.setCode(model.getExampleCodeList().get(i));
+                try {
+                    Models.applyBindings(model, "dynamic");
+                } catch (Exception exc) {
+
+                }
                 return;
             }
         }
@@ -61,16 +58,29 @@ final class DataModel {
     }
 
     @Function
-    static void changeSP(Dictionary model, String data
-    ) {
-        if (data != "") {
+    static void changeSP(final Dictionary model, final String data) {
+        if (!"".equals(data)) {
             model.setSearchPhrase(data);
             changeFP(model);
         }
     }
 
-    private static boolean stringsAreEqual(final String term, final String searchP) {
-        return term.trim().replaceAll("[^\\x00-\\x7F]", "").toLowerCase().contains(searchP.trim().toLowerCase().replaceAll("[^\\x00-\\x7F\\s]", ""));
+    /**
+     * Determines if search phrase is contained into the term. This method
+     * matches any kind of letter from any language to compare.
+     *
+     * @param term dictionary term
+     * @param searchP Search phrase
+     * @return If the search phrase is contained into the given term
+     */
+    private static boolean stringsAreEqual(final String term,
+            final String searchP) {
+        return term.trim().replaceAll(
+                "[^\\p{L}]",
+                "").toLowerCase().contains(
+                        searchP.trim().toLowerCase().replaceAll(
+                                "[^\\p{L}]", "")
+                );
     }
 
 }

@@ -1,10 +1,12 @@
 package web.aprendiendola.dictionaryweb.aprendiendola.dictionary.DiccionarioDeJava;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.PropertyResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.java.html.boot.BrowserBuilder;
@@ -21,9 +23,10 @@ public final class Main {
     private static final String BUNDLE_PATH
             = "web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava/TranslateMe";
 
-    private static void addTermsToTermList(List<String> termList, final String... terms) {
+    private static void addTermsToTermList(List<String> termList,
+            final String... terms) {
         for (String term : terms) {
-            termList.add(ResourceBundle.getBundle(BUNDLE_PATH).getString(term));
+            termList.add(cadenaEnUTF8(term));
         }
         //termList.addAll(Arrays.asList(terms));
     }
@@ -31,23 +34,39 @@ public final class Main {
     private static void addTermsToDefinitionsList(List<String> definitionsList,
             final String... terms) {
         for (String term : terms) {
-            definitionsList.add(ResourceBundle.getBundle(BUNDLE_PATH).getString(term + "_INFO"));
+            definitionsList.add(cadenaEnUTF8(term + "_INFO")
+            );
         }
     }
 
     private static void addTermsToExamplesList(List<String> definitionsList,
             final String... terms) {
         for (String term : terms) {
-            definitionsList.add(ResourceBundle.getBundle(BUNDLE_PATH).getString(term + "_CODE"));
+            definitionsList.add(cadenaEnUTF8(term + "_CODE"));
         }
     }
 
     private static void addTerms(List<String> termList,
             List<String> definitionList,
             List<String> examplesList, final String... terms) {
+        Arrays.sort(terms);
         addTermsToTermList(termList, terms);
         addTermsToDefinitionsList(definitionList, terms);
         addTermsToExamplesList(examplesList, terms);
+    }
+
+    private static String cadenaEnUTF8(final String nombre) {
+        String internacionalizado = nombre;
+        try {
+            internacionalizado = new String(
+                    ResourceBundle.getBundle(BUNDLE_PATH)
+                    .getString(nombre).getBytes(),
+                    "UTF-8"
+            );
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return internacionalizado;
     }
 
     /**
@@ -81,19 +100,21 @@ public final class Main {
      *
      * @throws java.lang.Exception
      */
-    public static void onPageLoad() throws Exception {
-        Dictionary model = new Dictionary(
-                ResourceBundle.getBundle(BUNDLE_PATH)
-                .getString("HELLOWORLD"),
-                ResourceBundle.getBundle(BUNDLE_PATH)
-                .getString("CLICKTOSEARCH"),
+    public static void onPageLoad() {
+        Dictionary model;
+        model = new Dictionary(cadenaEnUTF8("HELLOWORLD"),
+                cadenaEnUTF8("CLICKTOSEARCH"),
                 "", "");
         List<String> termList = model.getTermList();
         List<String> definitionsList = model.getDefinitionList();
         List<String> examplesList = model.getExampleCodeList();
         addTerms(termList, definitionsList, examplesList,
-                "HELLOWORLD", "JAVA", "CLASS", "VARIABLE", "PACKAGE_INFO");
-        model.applyBindings();
+                "HELLOWORLD", "JAVA", "CLASS", "VARIABLE", "PACKAGE_INFO",
+                "CYCLOMATIC_COMPLEXITY");
+        try {
+            model.applyBindings();
+        } catch (Exception e) {
+        }
         Dialogs.screenSize();
     }
 
