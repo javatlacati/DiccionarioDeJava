@@ -9,8 +9,7 @@ import net.java.html.json.Models;
 import net.java.html.json.Property;
 
 /**
- * Model annotation generates class Data with one message property, boolean
- * property and read only words property
+ * Model annotation generates class Data.
  */
 @Model(className = "Dictionary", targetId = "", properties = {
     @Property(name = "searchPhrase", type = String.class),
@@ -24,6 +23,12 @@ import net.java.html.json.Property;
 
 final class DataModel {
 
+    /**
+     * Determines if a word search can be performed.
+     *
+     * @param searchPhrase thse user entered search phrase. Must not be null.
+     * @see #changeSP(Dictionary, String)
+     */
     @ComputedProperty
     static boolean canSearch(final String searchPhrase) {
         return searchPhrase != null && searchPhrase.length() > 0;
@@ -57,8 +62,13 @@ final class DataModel {
                 ).getString("NOTFOUND"));
     }
 
+    /**
+     * Changes the value of the search phrase in the model.
+     * @param data The search phrase
+     * @param model data model
+     */
     @Function
-    static void changeSP(final Dictionary model, final String data) {
+    static void changeSP(Dictionary model, final String data) {
         if (!"".equals(data)) {
             model.setSearchPhrase(data);
             changeFP(model);

@@ -1,12 +1,8 @@
 package web.aprendiendola.dictionaryweb.aprendiendola.dictionary.DiccionarioDeJava;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.PropertyResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.java.html.boot.BrowserBuilder;
@@ -26,7 +22,7 @@ public final class Main {
     private static void addTermsToTermList(List<String> termList,
             final String... terms) {
         for (String term : terms) {
-            termList.add(cadenaEnUTF8(term));
+            termList.add(ResourceBundle.getBundle(BUNDLE_PATH).getString(term));//getStringFromBundle(term));
         }
         //termList.addAll(Arrays.asList(terms));
     }
@@ -34,7 +30,7 @@ public final class Main {
     private static void addTermsToDefinitionsList(List<String> definitionsList,
             final String... terms) {
         for (String term : terms) {
-            definitionsList.add(cadenaEnUTF8(term + "_INFO")
+            definitionsList.add(getStringFromBundle(term + "_INFO")
             );
         }
     }
@@ -42,7 +38,7 @@ public final class Main {
     private static void addTermsToExamplesList(List<String> definitionsList,
             final String... terms) {
         for (String term : terms) {
-            definitionsList.add(cadenaEnUTF8(term + "_CODE"));
+            definitionsList.add(getStringFromBundle(term + "_CODE"));
         }
     }
 
@@ -55,18 +51,19 @@ public final class Main {
         addTermsToExamplesList(examplesList, terms);
     }
 
-    private static String cadenaEnUTF8(final String nombre) {
-        String internacionalizado = nombre;
-        try {
-            internacionalizado = new String(
-                    ResourceBundle.getBundle(BUNDLE_PATH)
-                    .getString(nombre).getBytes(),
-                    "UTF-8"
-            );
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return internacionalizado;
+    private static String getStringFromBundle(final String nombre) {
+//        String internacionalizado = nombre;
+//        try {
+//            internacionalizado = new String(
+//                    ResourceBundle.getBundle(BUNDLE_PATH)
+//                    .getString(nombre).getBytes(),
+//                    "UTF-8"
+//            );
+//        } catch (UnsupportedEncodingException ex) {
+//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return internacionalizado;
+        return ResourceBundle.getBundle(BUNDLE_PATH).getString(nombre);
     }
 
     /**
@@ -102,15 +99,16 @@ public final class Main {
      */
     public static void onPageLoad() {
         Dictionary model;
-        model = new Dictionary(cadenaEnUTF8("HELLOWORLD"),
-                cadenaEnUTF8("CLICKTOSEARCH"),
+        model = new Dictionary(getStringFromBundle("HELLOWORLD"),
+                getStringFromBundle("CLICKTOSEARCH"),
                 "", "");
         List<String> termList = model.getTermList();
         List<String> definitionsList = model.getDefinitionList();
         List<String> examplesList = model.getExampleCodeList();
         addTerms(termList, definitionsList, examplesList,
                 "HELLOWORLD", "JAVA", "CLASS", "VARIABLE", "PACKAGE_INFO",
-                "CYCLOMATIC_COMPLEXITY");
+                "CYCLOMATIC_COMPLEXITY", "CONSTRUCTOR", "METHOD",
+                "ATTRIBUTE");
         try {
             model.applyBindings();
         } catch (Exception e) {

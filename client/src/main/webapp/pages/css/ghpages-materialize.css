@@ -6169,6 +6169,8 @@ a.waves-effect .waves-ripple {
   color: rgba(0, 0, 0, 0.6);
   line-height: 32px;
   padding: 0 12px;
+  margin-top: 1px;
+  margin-bottom:1px;
   border-radius: 16px;
   background-color: #E4E4E4; }
   .chip img {
