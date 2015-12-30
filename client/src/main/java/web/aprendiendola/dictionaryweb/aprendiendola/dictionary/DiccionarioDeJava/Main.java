@@ -22,7 +22,7 @@ public final class Main {
     private static void addTermsToTermList(List<String> termList,
             final String... terms) {
         for (String term : terms) {
-            termList.add(ResourceBundle.getBundle(BUNDLE_PATH).getString(term));//getStringFromBundle(term));
+            termList.add(ResourceBundle.getBundle(BUNDLE_PATH).getString(term));
         }
         //termList.addAll(Arrays.asList(terms));
     }
@@ -42,9 +42,9 @@ public final class Main {
         }
     }
 
-    private static void addTerms(List<String> termList,
-            List<String> definitionList,
-            List<String> examplesList, final String... terms) {
+    private static void addTerms(final List<String> termList,
+            final List<String> definitionList,
+            final List<String> examplesList, final String... terms) {
         Arrays.sort(terms);
         addTermsToTermList(termList, terms);
         addTermsToDefinitionsList(definitionList, terms);
@@ -95,7 +95,7 @@ public final class Main {
     /**
      * Called when the page is ready.
      *
-     * @throws java.lang.Exception
+     * @throws Exception
      */
     public static void onPageLoad() {
         Dictionary model;

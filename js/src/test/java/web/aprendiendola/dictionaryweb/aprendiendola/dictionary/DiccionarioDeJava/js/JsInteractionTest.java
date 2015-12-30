@@ -8,23 +8,30 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-/** Tests for behavior of @JavaScriptBody methods. Set your JavaScript 
- * environment up (for example define <code>alert</code> or use some
- * emulation library like <em>env.js</em>), register script presenter 
- * and then you can call methods that deal with JavaScript in your tests.
+/**
+ * Tests for behavior of @JavaScriptBody methods. Set your JavaScript
+ * environment up (for example define <code>alert</code> or use some emulation
+ * library like <em>env.js</em>), register script presenter and then you can
+ * call methods that deal with JavaScript in your tests.
  */
 public class JsInteractionTest {
+
     private Closeable jsEngine;
-    @BeforeMethod public void initializeJSEngine() throws Exception {
+
+    @BeforeMethod
+    public final void initializeJSEngine() throws Exception {
         jsEngine = Fn.activate(Scripts.createPresenter());
     }
-    
-    @AfterMethod public void shutdownJSEngine() throws Exception {
+
+    @AfterMethod
+    public final void shutdownJSEngine() throws Exception {
         jsEngine.close();
     }
-    
-    @Test public void testCallbackFromJavaScript() throws Exception {
+
+    @Test
+    public final void testCallbackFromJavaScript() throws Exception {
         class R implements Runnable {
+
             int called;
 
             @Override
@@ -33,9 +40,9 @@ public class JsInteractionTest {
             }
         }
         R callback = new R();
-        
+
         Dialogs.confirmByUser("Hello", callback);
-        
+
         assertEquals(callback.called, 1, "One immediate callback");
     }
-  }
+}
