@@ -26,7 +26,7 @@ jobs:
         # start your web application and listen on `localhost`
         - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
       install:
-        - mvn install -pl web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-pom,web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-js,web.aprendiendola.dictionaryweb.aprendiendola.dictionary:puzzlelogic,web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-web,web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-nb -Dmaven.javadoc.skip=true -B -ntp
+        - mvn install -pl web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-pom,web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-js,web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava,web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-web,web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-nb -Dmaven.javadoc.skip=true -B -ntp
       script:
         - mvn test -pl web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-js, -B -ntp
       after_success:
