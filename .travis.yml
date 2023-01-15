@@ -1,0 +1,59 @@
+cache:
+  directories:
+  - $HOME/.m2
+
+services:
+  - xvfb
+
+stages:
+  - compile
+  - compile1
+
+env:
+  - CAN_FAIL=false
+
+jobs:
+  include:
+    - name: job1
+      stage: compile
+      os:
+        - linux
+      language: java
+      addons:
+        chrome: stable
+      before_install:
+        - sudo apt-get -qq update || echo no sudo apt-get
+        # start your web application and listen on `localhost`
+        - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+      install:
+        - mvn install -pl web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-pom,web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-js,web.aprendiendola.dictionaryweb.aprendiendola.dictionary:puzzlelogic,web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-web,web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-nb -Dmaven.javadoc.skip=true -B -ntp
+      script:
+        - mvn test -pl web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-js, -B -ntp
+      after_success:
+        - mvn coveralls:report -B
+      workspaces:
+        create:
+          name: ws1
+          paths:
+            - $HOME/.m2
+    - name: job2
+      stage: compile1
+      language: android
+      depends_on: job1
+      env:
+        - CAN_FAIL=true
+      android:
+        components:
+          - extra-google-m2repository
+          - extra-android-m2repository
+      workspaces:
+        use: ws1
+      before_install:
+        - "export DISPLAY=:99.0"
+      install:
+        - mvn install -pl web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-android -DskipTests=true -Dmaven.javadoc.skip=true -B
+      script:
+        - mvn test -pl web.aprendiendola.dictionaryweb.aprendiendola.dictionary:DiccionarioDeJava-android org.jacoco:jacoco-maven-plugin:0.8.2:report -B
+  allow_failures:
+    env:
+    - CAN_FAIL=true

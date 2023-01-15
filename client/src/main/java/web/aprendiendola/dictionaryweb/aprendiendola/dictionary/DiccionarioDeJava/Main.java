@@ -94,8 +94,6 @@ public final class Main {
 
     /**
      * Called when the page is ready.
-     *
-     * @throws Exception
      */
     public static void onPageLoad() {
         Dictionary model;
