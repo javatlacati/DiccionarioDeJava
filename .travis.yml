@@ -9,6 +9,8 @@ stages:
   - compile
   - compile1
 
+jdk: openjdk8
+
 env:
   - CAN_FAIL=false
 
