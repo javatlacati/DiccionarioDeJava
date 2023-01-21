@@ -28,7 +28,7 @@ jobs:
         # start your web application and listen on `localhost`
         - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
       install:
-        - mvn install -pl org.javapro:jdictionary-pom,org.javapro:jdictionary-js,org.javapro:jdictionary-web,org.javapro:jdictionary-nb -Dmaven.javadoc.skip=true -B -ntp
+        - mvn install -pl org.javapro:jdictionary-pom,org.javapro:jdictionary,org.javapro:jdictionary-js,org.javapro:jdictionary-web,org.javapro:jdictionary-nb -Dmaven.javadoc.skip=true -B -ntp
       script:
         - mvn test -pl org.javapro:jdictionary-js, -B -ntp
       after_success:
