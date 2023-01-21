@@ -1,80 +1,87 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Java Dictionary</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link type="text/css" rel="stylesheet" href="css/ghpages-materialize.css"/>
-        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<head>
+    <title>Java Dictionary</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link type="text/css" rel="stylesheet" href="css/ghpages-materialize.css"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 
-        <style type="text/css">
-            input {
-                width: 100%;
-            }
-            #scene {
-                position: relative;
-                top: 60px;
-                text-align: center;
-            }
-            html {
-                -webkit-user-select: none;
-            }
-            nav li input{
-                color: #000;
-            }
+    <style type="text/css">
+        input {
+            width: 100%;
+        }
 
-            nav button{
-                color: #898989;
-            }
-        </style>
+        html {
+            -webkit-user-select: none;
+        }
 
-    </head>
-    <body class="blue lighten-4"><!--Import jQuery before materialize.js-->
-        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-        <script type="text/javascript" src="js/materialize.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $(".button-collapse").sideNav();
-            });
-        </script>
-        <div class="navbar-fixed">
-            <nav class="blue darken-2">
-                <div class="nav-wrapper ">
-                    <a href="#!" class="brand-logo center">Java Dictionary</a>
-                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">=</i></a>
-                    <div class="right hide-on-med-and-down">
-                        <form data-bind="enable:canSearch, submit: changeFP ">
-                            <div class="input-field">
-                                <input id="search" type="search" data-bind="textInput:searchPhrase, placeholder:'Buscar alguna palabra:'" required>
-                                <i class="material-icons">close</i>
-                            </div>
-                        </form>
+        nav li input {
+            color: #000;
+        }
+
+        nav button {
+            color: #898989;
+        }
+    </style>
+
+</head>
+<body class="blue lighten-4"><!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".button-collapse").sideNav();
+    });
+</script>
+<div class="navbar-fixed">
+    <nav class="blue darken-2">
+        <div class="nav-wrapper ">
+            <a href="#!" class="brand-logo center">Java Dictionary</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <!--<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">=</i></a>-->
+            <div class="right hide-on-med-and-down">
+                <form data-bind="enable:canSearch, submit: changeFP ">
+                    <div class="input-field">
+                        <input id="search" type="search"
+                               data-bind="textInput:searchPhrase, placeholder:'Buscar alguna palabra:'" required>
+                        <i class="material-icons">close</i>
                     </div>
-                    <ul class="side-nav" id="mobile-demo">
-                        <li><label>Search for a word:</label></li>
-                        <li><input data-bind="textInput:searchPhrase"></li>
-                        <li><button data-bind="click: changeFP, enable:canSearch ">Search</button></li>
-                    </ul>
-                </div>
-            </nav>
+                </form>
+            </div>
+            <ul class="sidenav" id="mobile-demo">
+                <li><label>Search for a word:</label></li>
+                <li><input data-bind="textInput:searchPhrase"></li>
+                <li>
+                    <button data-bind="click: changeFP, enable:canSearch ">Search</button>
+                </li>
+            </ul>
         </div>
+    </nav>
+</div>
         <span style="text-align: center"  data-bind="foreach: termList">
             <div class="chip blue lighten-3 white-text" href="#" data-bind="text: $data, click:$root.changeSP "></div>
             &nbsp;
-        </span>
+</span>
 
-        <div class="card-panel blue lighten-2">
-            <h3 data-bind="text: foundPhrase"></h3>
-            
-            <p id="description" class="white-text" data-bind="html:description" style="min-height: 100px;"></p>
-        </div>
+<div>
+    <div class="card-panel blue lighten-2">
+        <h3 data-bind="text: foundPhrase"></h3>
 
-        <div class="card blue darken-1" data-bind="html: code" style="min-height: 100px;"></div>
-        <!-- boot bck2brwsr -->
-        <script type="text/javascript" src="bck2brwsr.js"></script>
+        <p id="description" class="white-text" data-bind="html:description" style="min-height: 100px;"></p>
+    </div>
+
+    <div class="card blue darken-1" data-bind="html: code" style="min-height: 100px;"></div>
+</div>
+
+<!--<div data-bind="template: { name: page }"></div>-->
+<!--<div data-bind="template: { name: template}"></div>-->
+<!-- boot bck2brwsr -->
+<!--${browser.bootstrap}-->
+<!--        <script type="text/javascript" src="bck2brwsr.js"></script>
         <script>
-            var vm = bck2brwsr('DiccionarioDeJava.js');
-            var c = vm.loadClass('web.aprendiendola.dictionaryweb.aprendiendola.dictionary.DiccionarioDeJava.BrowserMain');
+            var vm = bck2brwsr('jdictionary.js');
+            var c = vm.loadClass('org.javapro.jdictionary.BrowserMain');
             c.invoke('main');
-        </script>
-    </body>
+        </script>-->
+</body>
 </html>

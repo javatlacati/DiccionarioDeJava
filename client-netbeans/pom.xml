@@ -4,29 +4,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>web.aprendiendola.dictionaryweb.aprendiendola.dictionary</groupId>
-        <artifactId>DiccionarioDeJava-pom</artifactId>
+        <groupId>org.javapro</groupId>
+        <artifactId>jdictionary-pom</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    
-    <groupId>web.aprendiendola.dictionaryweb.aprendiendola.dictionary</groupId>
-    <artifactId>DiccionarioDeJava-nb</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>nbm</packaging>
 
-    <name>DiccionarioDeJava Client for NetBeans</name>
+    <groupId>org.javapro</groupId>
+    <artifactId>jdictionary-nb</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>nbm-application</packaging>
+
+    <name>jdictionary Client for NetBeans</name>
 
     <properties>
+        <netbeans.version>RELEASE120-1</netbeans.version>
         <netbeans.compile.on.save>none</netbeans.compile.on.save>
-        <project.mainclass>web.aprendiendola.dictionaryweb.aprendiendola.dictionary.DiccionarioDeJava.NbMain</project.mainclass>
+        <project.mainclass>org.javapro.jdictionary.NbMain</project.mainclass>
     </properties>
-    <repositories>
-        <repository>
-            <id>netbeans</id>
-            <name>NetBeans</name>
-            <url>http://bits.netbeans.org/maven2/</url>
-        </repository>
-    </repositories>
     <build>
         <plugins>
             <plugin>
@@ -41,11 +35,20 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>          
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.3</version>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -55,6 +58,19 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>jar</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- to have the jar plugin pickup the nbm generated manifest -->
+                    <useDefaultManifestFile>true</useDefaultManifestFile>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -63,30 +79,25 @@
                 <executions>
                     <execution>
                         <id>unpack</id>
-                        <phase>process-resources</phase>
+                        <phase>generate-sources</phase>
                         <goals>
-                            <goal>unpack</goal>
+                            <goal>unpack-dependencies</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <artifactItems>
-                        <artifactItem>
-                            <groupId>web.aprendiendola.dictionaryweb.aprendiendola.dictionary</groupId>
-                            <artifactId>DiccionarioDeJava</artifactId>
-                            <version>${project.version}</version>
-                            <type>zip</type>
-                            <classifier>webpages</classifier>
-                            <overWrite>true</overWrite>
-                            <outputDirectory>${project.build.directory}/classes/web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava</outputDirectory>
-                        </artifactItem>
-                    </artifactItems>
+                    <type>zip</type>
+                    <classifier>webpages</classifier>
+                    <overWrite>true</overWrite>
+                    <outputDirectory>${project.build.directory}/classes/org/javapro/jdictionary</outputDirectory>
+                    <includes>*/**</includes>
+                    <includeGroupIds>${project.groupId}</includeGroupIds>
                 </configuration>
-            </plugin>            
+            </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+                <groupId>org.apache.netbeans.utilities</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
-                <version>3.13</version>
+                <version>4.3</version>
                 <extensions>true</extensions>
                 <executions>
                     <execution>
@@ -97,11 +108,11 @@
                         </goals>
                         <configuration>
                             <useOSGiDependencies>true</useOSGiDependencies>
-                            <brandingToken>DiccionarioDeJava</brandingToken>
-                            <cluster>DiccionarioDeJava</cluster>
+                            <brandingToken>jdictionary</brandingToken>
+                            <cluster>jdictionary</cluster>
                             <verifyIntegrity>false</verifyIntegrity>
                         </configuration>
-                    </execution>                       
+                    </execution>
                     <execution>
                         <id>default-nbm</id>
                         <phase>package</phase>
@@ -117,18 +128,10 @@
                 </executions>
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
-                    <brandingToken>DiccionarioDeJava</brandingToken>
-                    <cluster>DiccionarioDeJava</cluster>
+                    <brandingToken>netbeans</brandingToken>
+                    <cluster>jdictionary</cluster>
                     <verifyIntegrity>false</verifyIntegrity>
-                </configuration>
-            </plugin>                      
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <!-- to have the jar plugin pickup the nbm generated manifest -->
-                    <useDefaultManifestFile>true</useDefaultManifestFile>
+                    <nbmBuildDir>${project.build.directory}</nbmBuildDir>
                 </configuration>
             </plugin>
             <plugin>
@@ -141,7 +144,7 @@
                             <goal>scale</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>target/classes/web/aprendiendola/dictionaryweb/aprendiendola/dictionary/DiccionarioDeJava</outputDirectory>
+                            <outputDirectory>target/classes/org/javapro/jdictionary</outputDirectory>
                             <images>
                                 <image>
                                     <source>src/main/icons/launcher.png</source>
@@ -162,28 +165,8 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.netbeans.html</groupId>
-            <artifactId>nbrwsr</artifactId>
-            <version>${nb.html.version}</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.oracle</groupId>
-                    <artifactId>javafx</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.netbeans.html</groupId>
-                    <artifactId>net.java.html.boot</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.netbeans.html</groupId>
-                    <artifactId>net.java.html.boot.fx</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>web.aprendiendola.dictionaryweb.aprendiendola.dictionary</groupId>
-            <artifactId>DiccionarioDeJava</artifactId>
+            <groupId>org.javapro</groupId>
+            <artifactId>jdictionary</artifactId>
             <version>${project.version}</version>
             <exclusions>
                 <exclusion>
@@ -200,7 +183,69 @@
         <dependency>
             <groupId>org.netbeans.html</groupId>
             <artifactId>net.java.html.boot.fx</artifactId>
-            <version>1.1</version>
+            <version>${net.java.html.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.html</groupId>
+            <artifactId>ko4j</artifactId>
+            <version>${net.java.html.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.html</groupId>
+            <artifactId>xhr4j</artifactId>
+            <version>${net.java.html.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.html</groupId>
+            <artifactId>net.java.html.geo</artifactId>
+            <version>${net.java.html.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-api-htmlui</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.cluster</groupId>
+            <artifactId>platform</artifactId>
+            <version>${netbeans.version}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-ui</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>jdictionary-js</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-libs-javafx-win</artifactId>
+            <version>${netbeans.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-libs-javafx-macosx</artifactId>
+            <version>${netbeans.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-libs-javafx-linux</artifactId>
+            <version>${netbeans.version}</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>
