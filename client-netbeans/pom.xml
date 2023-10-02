@@ -17,7 +17,7 @@
     <name>jdictionary Client for NetBeans</name>
 
     <properties>
-        <netbeans.version>RELEASE120-1</netbeans.version>
+        <netbeans.version>RELEASE90</netbeans.version>
         <netbeans.compile.on.save>none</netbeans.compile.on.save>
         <project.mainclass>org.javapro.jdictionary.NbMain</project.mainclass>
     </properties>
